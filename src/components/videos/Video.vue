@@ -14,7 +14,7 @@
 
             <button class="button is-light is-small count">Dislike</button>
             <span class="count"> {{ video.like_count }}</span>
-            <h2>Uploader's Name: {{ author_name }}</h2>
+            <h2 class="uploader-name" title="If not have user name then will show user email">Uploader's Name: {{ author_name }}</h2>
         </div>
 
         <div class="column">
@@ -27,9 +27,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="user in liked_users" :key="user.id">
-                        <td>1</td>
-                        <td>{{ user.email }}</td>
+                    <tr v-for="(like_user, index) in liked_users" :key="like_user.id">
+                        <td>{{ index + 1}}</td>
+                        <td>{{ like_user.email }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -45,10 +45,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
-                    <tr v-for="user in disliked_users" :key="user.id">
-                        <td>1</td>
-                        <td>{{ user.email }}</td>
+                    <tr v-for="(dislike_user, index) in disliked_users" :key="dislike_user.id">
+                        <td>{{ index + 1}}</td>
+                        <td>{{ dislike_user.email }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -126,6 +125,7 @@ export default {
             let video_liked_user_ids = {
                 'user_ids': this.video.likes.map((item) => item.user_id)
             }
+            console.log('video_liked_user_ids', video_liked_user_ids)
             await axios
                     .post(
                         `http://127.0.0.1:8000/api/video/users`,
@@ -143,13 +143,14 @@ export default {
             let video_disliked_user_ids = {
                 'user_ids': this.video.dislikes.map((item) => item.user_id)
             }
+            console.log('video_disliked_user_ids', video_disliked_user_ids)
             await axios
                     .post(
                         `http://127.0.0.1:8000/api/video/users`,
                         video_disliked_user_ids
                     )
                     .then(response => {
-                        console.log('liked user data', response.data)
+                        console.log('disliked user data', response.data)
                         this.disliked_users = response.data
                     })
                     .catch(error => {
@@ -184,5 +185,9 @@ export default {
   }
   .video-title{
     margin-bottom: 10px;
+  }
+  .uploader-name {
+    padding-top: 20px;
+    font-weight: 700;
   }
 </style>
