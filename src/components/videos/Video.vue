@@ -14,7 +14,7 @@
 
             <button class="button is-light is-small count">Dislike</button>
             <span class="count"> {{ video.like_count }}</span>
-            <h2>Uploader's name</h2>
+            <h2>Uploader's Name: {{ author_name }}</h2>
         </div>
 
         <div class="column">
@@ -68,7 +68,8 @@ export default {
   },
   data () {
     return {
-        video: {}
+        video: {},
+        author_name: ''
     }
   },
   mounted() {
@@ -83,7 +84,36 @@ export default {
             .get(`http://127.0.0.1:8001/api/videos/${videoID}/`)
             .then(response => {
                 this.video = response.data
-                console.log('response data', response.data)
+                let author_id = response.data.author_id
+                console.log('response data', author_id, response.data)
+                
+                let axiosConfig = {
+                    headers: {
+                    'Authorization': this.$store.state.token 
+                    }
+                };
+                axios
+                    .get(`http://127.0.0.1:8000/api/users/${author_id}/`, axiosConfig)
+                    .then(response => {
+                        console.log('response user data', response.data)
+                        
+                        let name = ''
+                        if(response.data.first_name){
+                            name += response.data.first_name
+                        } 
+                        if(response.data.last_name) {
+                            name += response.data.last_name
+                        }
+                        if (!response.data.first_name || !response.data.last_name) {
+                            name = response.data.email
+                        }
+                        
+                        this.author_name = name
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+                
             })
             .catch(error => {
                 console.log(error)
