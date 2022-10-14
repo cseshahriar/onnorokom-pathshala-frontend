@@ -7,7 +7,7 @@ Onnorokom pathshala frontend
 >
 > _Please make sure `npm`, `nodejs`, `vuecli` and is installed in the system._
 
-git clone https://github.com/cseshahriar/onnorokom-pathshala-frontend.git
-remove package-lock.json
-npm install
-npm run serve
+- git clone https://github.com/cseshahriar/onnorokom-pathshala-frontend.git
+- remove package-lock.json
+- npm install
+- npm run serve
