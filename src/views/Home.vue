@@ -6,8 +6,8 @@
 
 <script>
 // @ is an alias to /src
-import axios from 'axios'
-import Videos from '@/components/videos/Videos.vue'
+import axios from 'axios';
+import Videos from '@/components/videos/Videos.vue';
 
 export default {
   name: 'Home',

@@ -7,7 +7,7 @@ import LogIn from '../views/LogIn.vue'
 import Navbar from '@/components/layout/Navbar'
 import Dashboard from '../views/dashboard/Dashboard'
 import MyAccount from '../views/dashboard/MyAccount'
-
+import Video from '@/components/videos/Video'
 
 const routes = [
   {
@@ -37,6 +37,14 @@ const routes = [
     path: '/dashboard/my-account',
     name: 'MyAccount',
     component: MyAccount,
+    meta: {
+      requireLogin: true
+    }
+  },
+  {
+    path: '/video/:id',
+    name: 'Video',
+    component: Video,
     meta: {
       requireLogin: true
     }

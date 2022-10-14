@@ -1,35 +1,39 @@
 <template>
-    <div class="container-fluid">
-        <div class="row mb-3">
-            <div class="col-md-6 offset-3">
-                <h4 class="mb-3 title text-center">Welcome to OnnoRokom Pathshala</h4>
-                <p class="subtitle">List of latest uploaded videos</p>
-            </div>
-        </div>
-
-        <div class="columns is-multiline is-mobile">
-          <!-- single video -->
-          <div class="column is-one-quarter mb-5" v-for="video in videos" v-bind:key="video.id">
-              <a :href="'https://www.youtube.com/embed/' + video.youtube_video_id" target="_blank">
-                <iframe width="350" height="200" :src="'https://www.youtube.com/embed/' + video.youtube_video_id" frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-                </iframe>
-              </a>
-              <br>
-              <h2 class="mb-1">{{ video.title }}</h2>
-              <span class="count"> {{ video.view_count }} views</span>
-              <span class="count"> Likes: {{ video.like_count }}</span>
-              <span class="count"> Dislikes: {{ video.like_count }}</span>
-          </div>
-          <!-- / single video -->
-
+    <div class="columns">
+        <div class="column is-full">
+            <h4 class="mb-3 title text-center">Welcome to OnnoRokom Pathshala</h4>
+            <p class="subtitle">List of latest uploaded videos</p>
         </div>
     </div>
+
+      <div class="columns is-multiline is-mobile">
+        <!-- single video -->
+        <div class="column is-one-quarter mb-5" v-for="video in videos" v-bind:key="video.id">
+          
+          <iframe width="350" height="200" :src="'https://www.youtube.com/embed/' + video.youtube_video_id" frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+        </iframe>
+
+          <br>
+          <h2 class="mb-1">{{ video.title }}</h2>
+         
+          <span class="count">{{ video.view_count }} views</span>
+           
+           <button class="button is-light is-small count">Like</button>
+           <span class="count"> {{ video.like_count }}</span>
+
+           <button class="button is-light is-small count">Dislike</button>
+           <span class="count"> {{ video.like_count }}</span>
+
+          <router-link :to="{ name: 'Video', params: { id: video.id }}">Details</router-link>
+        </div>
+        <!-- / single video -->
+      </div>
 </template>
 
 <script>
 // @ is an alias to /sc
-import axios from 'axios'
+import axios from 'axios';
 // @ is an alias to /src
 
 export default {
@@ -38,7 +42,7 @@ export default {
   
   },
   props: {
-      videos: []
+      videos: [],
   },
   data () {
     return {
@@ -46,7 +50,6 @@ export default {
     }
   },
   methods: {
-  
   },
   created () {
     // work a page init
