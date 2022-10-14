@@ -15,7 +15,7 @@
         </iframe>
 
           <br>
-          <h2 class="mb-1">{{ video.title }}</h2>
+          <h2 class="video-title">{{ video.title }}</h2>
          
           <span class="count">{{ video.view_count }} views</span>
            
@@ -74,5 +74,8 @@ export default {
     display: inline-block;
     margin-right: 20px;
     font-weight: 700;
+  }
+  .video-title{
+    margin-bottom: 10px;
   }
 </style>

@@ -5,7 +5,7 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
             </iframe>
             <br>
-            <h2 class="mb-1">{{ video.title }}</h2>
+            <h2 class="video-title">{{ video.title }}</h2>
 
             <span class="count">{{ video.view_count }} views</span>
            
@@ -27,9 +27,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr v-for="user in liked_users" :key="user.id">
                         <td>1</td>
-                        <td>Shahriar</td>
+                        <td>{{ user.email }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -46,8 +46,8 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
-                        <td>Shahriar</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
@@ -69,7 +69,9 @@ export default {
   data () {
     return {
         video: {},
-        author_name: ''
+        author_name: '',
+        liked_users: [],
+        disliked_users: [],
     }
   },
   mounted() {
@@ -80,19 +82,24 @@ export default {
         this.$store.commit('setIsLoading', true)
         const videoID = this.$route.params.id
 
+        let axiosConfig = {
+            headers: {
+                'Authorization': this.$store.state.token 
+            }
+        };
+
         await axios
             .get(`http://127.0.0.1:8001/api/videos/${videoID}/`)
             .then(response => {
                 this.video = response.data
-                let author_id = response.data.author_id
-                console.log('response data', author_id, response.data)
-                
-                let axiosConfig = {
-                    headers: {
-                    'Authorization': this.$store.state.token 
-                    }
-                };
-                axios
+                console.log('response data', response.data)        
+            })
+            .catch(error => {
+                console.log(error)
+            })
+            
+            let author_id = this.video.author_id
+            await axios
                     .get(`http://127.0.0.1:8000/api/users/${author_id}/`, axiosConfig)
                     .then(response => {
                         console.log('response user data', response.data)
@@ -113,12 +120,23 @@ export default {
                     .catch(error => {
                         console.log(error)
                     })
-                
-            })
-            .catch(error => {
-                console.log(error)
-            })
-        
+            
+            let video_liked_user_ids = {
+                'user_ids': this.video.likes.map((item) => item.user_id)
+            }
+            await axios
+                    .post(
+                        `http://127.0.0.1:8000/api/video/users`,
+                        video_liked_user_ids
+                    )
+                    .then(response => {
+                        console.log('liked user data', response.data)
+                        this.liked_users = response.data
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+
         this.$store.commit('setIsLoading', false)
     },
   }, 
@@ -143,5 +161,8 @@ export default {
   }
   .video-iframe {
 
+  }
+  .video-title{
+    margin-bottom: 10px;
   }
 </style>
