@@ -45,9 +45,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
+                    
+                    <tr v-for="user in disliked_users" :key="user.id">
+                        <td>1</td>
+                        <td>{{ user.email }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -121,6 +122,7 @@ export default {
                         console.log(error)
                     })
             
+            // video liked
             let video_liked_user_ids = {
                 'user_ids': this.video.likes.map((item) => item.user_id)
             }
@@ -136,7 +138,25 @@ export default {
                     .catch(error => {
                         console.log(error)
                     })
+        
+            // disliked_users
+            let video_disliked_user_ids = {
+                'user_ids': this.video.dislikes.map((item) => item.user_id)
+            }
+            await axios
+                    .post(
+                        `http://127.0.0.1:8000/api/video/users`,
+                        video_disliked_user_ids
+                    )
+                    .then(response => {
+                        console.log('liked user data', response.data)
+                        this.disliked_users = response.data
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
 
+        
         this.$store.commit('setIsLoading', false)
     },
   }, 
