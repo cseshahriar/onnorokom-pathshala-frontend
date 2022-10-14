@@ -7,7 +7,7 @@
 
             <div class="column is-6">
                 <div class="box has-background-warning">
-                    <h3>Name: {{ this.$store.state.user.name}}</h3>
+                    <h3 v-if="this.$store.state.user.name">Name: {{ this.$store.state.user.name}}</h3>
                     <h3>Email: {{ this.$store.state.user.username}}</h3>
                 </div>
             </div>
