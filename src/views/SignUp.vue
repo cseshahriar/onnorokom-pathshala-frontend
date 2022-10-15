@@ -37,7 +37,7 @@
                         </div>
                     </div>
 
-                    <div class="notification is-warning" v-if="errors.length">
+                    <div class="notification is-warning" v-if="this.errors.length">
                         <p v-for="error in errors" :key="error">{{ error }}</p>
                     </div>
 

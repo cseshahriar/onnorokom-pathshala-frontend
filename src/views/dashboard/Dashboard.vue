@@ -1,14 +1,21 @@
 <template>
-    <div class="container">
+    <div>
         <div class="columns is-multiline">
             <div class="column is-12">
                 <h1 class="title">Dashboard</h1>
             </div>
 
             <div class="column is-6">
-                <div class="box has-background-warning">
+                <div class="box has-background-light">
+                    <h1>Profile</h1>
                     <h3 v-if="this.$store.state.user.name">Name: {{ this.$store.state.user.name}}</h3>
                     <h3>Email: {{ this.$store.state.user.username}}</h3>
+                </div>
+            </div>
+
+            <div class="column is-6">
+                <div class="box has-background-light">
+                   <CreateVideo/>
                 </div>
             </div>
         </div>
@@ -18,9 +25,13 @@
 <script>
     import axios from 'axios'
     import {toast} from 'bulma-toast'
+    import CreateVideo from '@/components/videos/CreateVideo.vue';
 
     export default {
         name: 'Dashboard',
+        components: {
+            CreateVideo
+        },
         data(){
             return {
                 

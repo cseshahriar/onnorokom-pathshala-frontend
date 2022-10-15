@@ -1,11 +1,12 @@
 <template>
     <div class="columns is-desktop is-mobile">
         <div class="column">
-            <iframe class="video-iframe" width="400" height="300" :src="'https://www.youtube.com/embed/' + video.youtube_video_id" frameborder="0" 
+            <!-- <iframe class="video-iframe" width="400" height="300" :src="'https://www.youtube.com/embed/' + video.youtube_video_id" frameborder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-            </iframe>
+            </iframe> -->
+            <h2 class="uploader-name" title="If not have user name then will show user email">Uploader's Name: {{ author_name }}</h2>
             <br>
-            <h2 class="video-title">{{ video.title }}</h2>
+            <h2 class="video-title">Title: {{ video.title }}</h2>
 
             <span class="count">{{ video.view_count }} views</span>
            
@@ -14,7 +15,6 @@
 
             <button class="button is-light is-small count">Dislike</button>
             <span class="count"> {{ video.like_count }}</span>
-            <h2 class="uploader-name" title="If not have user name then will show user email">Uploader's Name: {{ author_name }}</h2>
         </div>
 
         <div class="column">
@@ -109,7 +109,7 @@ export default {
                             name += response.data.first_name
                         } 
                         if(response.data.last_name) {
-                            name += response.data.last_name
+                            name += ' ' + response.data.last_name
                         }
                         if (!response.data.first_name || !response.data.last_name) {
                             name = response.data.email
