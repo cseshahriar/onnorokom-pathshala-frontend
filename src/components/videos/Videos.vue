@@ -9,23 +9,17 @@
       <div class="columns is-multiline is-mobile">
         <!-- single video -->
         <div class="column is-one-quarter mb-5" v-for="video in videos" v-bind:key="video.id">
-          
-          <iframe width="350" height="200" :src="'https://www.youtube.com/embed/' + video.youtube_video_id" frameborder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-        </iframe>
-
+            <iframe width="350" height="200" :src="'https://www.youtube.com/embed/' + video.youtube_video_id" frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+            </iframe>
           <br>
           <h2 class="video-title">{{ video.title }}</h2>
          
           <span class="count">{{ video.view_count }} views</span>
-           
-           <button class="button is-light is-small count">Like</button>
-           <span class="count"> {{ video.like_count }}</span>
+          <span class="count">{{ video.like_count }} Likes</span>
+          <span class="count">{{ video.like_count }} Dislike</span>
 
-           <button class="button is-light is-small count">Dislike</button>
-           <span class="count"> {{ video.like_count }}</span>
-
-          <router-link :to="{ name: 'Video', params: { id: video.id }}">Details</router-link>
+          <router-link :to="{ name: 'Video', params: { id: video.id }}"><i class="fa fa-eye"></i></router-link>
         </div>
         <!-- / single video -->
       </div>

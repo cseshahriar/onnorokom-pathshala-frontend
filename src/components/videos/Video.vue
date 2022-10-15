@@ -1,24 +1,24 @@
 <template>
     <div class="columns is-desktop is-mobile">
-        <div class="column">
-            <!-- <iframe class="video-iframe" width="400" height="300" :src="'https://www.youtube.com/embed/' + video.youtube_video_id" frameborder="0" 
+        <div class="column is-6">
+            <h2 class="uploader-name title" title="If not have user name then will show user email">Uploader's Name: {{ author_name }}</h2>
+            <iframe class="video-iframe" width="400" height="300" :src="'https://www.youtube.com/embed/' + video.youtube_video_id" frameborder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-            </iframe> -->
-            <h2 class="uploader-name" title="If not have user name then will show user email">Uploader's Name: {{ author_name }}</h2>
+            </iframe>
             <br>
             <h2 class="video-title">Title: {{ video.title }}</h2>
 
             <span class="count">{{ video.view_count }} views</span>
            
-            <button class="button is-light is-small count">Like</button>
+            <button class="button is-small count has-text-success-dark" style="border-radius:3px; width: 60px"><i class="fas fa-thumbs-up"></i></button>
             <span class="count"> {{ video.like_count }}</span>
 
-            <button class="button is-light is-small count">Dislike</button>
+            <button class="button is-small count has-text-danger-dark" style="border-radius:3px; width: 60px"> <i class="fas fa-thumbs-down"></i></button>
             <span class="count"> {{ video.like_count }}</span>
         </div>
 
-        <div class="column">
-            <h2>User list of who likes</h2>
+        <div class="column is-3">
+            <h2 class="subtitle">User list of who likes</h2>
             <table class="table">
                 <thead>
                     <tr>
@@ -35,8 +35,8 @@
             </table>
         </div>
 
-        <div class="column">
-            <h2>User list of who Dislikes</h2>
+        <div class="column is-3">
+            <h2 class="subtitle">User list of who Dislikes</h2>
             <table class="table">
                 <thead>
                     <tr>
@@ -178,16 +178,23 @@ export default {
   .count {
     display: inline-block;
     margin-right: 10px;
+    margin-left: 20px;
     font-weight: 500;
   }
   .video-iframe {
-
+    width: 100%;
+    height: 450px;
   }
   .video-title{
-    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 15px;
   }
   .uploader-name {
     padding-top: 20px;
+    padding-bottom: 20px;
     font-weight: 700;
+  }
+  table {
+    margin-top: 30px;
   }
 </style>
