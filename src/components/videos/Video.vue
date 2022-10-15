@@ -10,11 +10,18 @@
 
             <span class="count">{{ video.view_count }} views</span>
            
-            <button class="button is-small count has-text-success-dark" style="border-radius:3px; width: 60px"><i class="fas fa-thumbs-up"></i></button>
+            <button 
+                class="button is-small count has-text-success-dark"
+                style="border-radius:3px; width: 60px"
+                @click="createLike"><i class="fas fa-thumbs-up"></i></button>
+
             <span class="count"> {{ video.like_count }}</span>
 
-            <button class="button is-small count has-text-danger-dark" style="border-radius:3px; width: 60px"> <i class="fas fa-thumbs-down"></i></button>
-            <span class="count"> {{ video.like_count }}</span>
+            <button
+                class="button is-small count has-text-danger-dark"
+                style="border-radius:3px; width: 60px"
+                @click="createDislike"><i class="fas fa-thumbs-down"></i></button>
+            <span class="count"> {{ video.dislike_count }}</span>
         </div>
 
         <div class="column is-3">
@@ -61,6 +68,7 @@
 <script>
 // @ is an alias to /sc
 import axios from 'axios';
+import {toast} from 'bulma-toast'
 
 export default {
   name: 'Video',
@@ -78,6 +86,7 @@ export default {
     this.getVideo()
   },
   methods: {
+    // get video
     async getVideo() {
         this.$store.commit('setIsLoading', true)
         const videoID = this.$route.params.id
@@ -160,6 +169,54 @@ export default {
         
         this.$store.commit('setIsLoading', false)
     },
+    // create like
+    async createLike() {
+        console.log('create like call')
+        this.$store.commit('setIsLoading', true)
+
+        const likeData = {
+            video: parseInt(this.video.id),
+            user_id: parseInt(this.$store.state.user.id)
+        }
+
+        await axios
+        .post(
+            `http://127.0.0.1:8001/api/likes/`,
+            likeData
+        )
+        .then(response => {
+            console.log('liked user data', response.data)
+            this.getVideo()
+        })
+        .catch(error => {
+            console.log(error)
+        })
+        this.$store.commit('setIsLoading', false)
+    },
+    // create display
+    async createDislike() {
+        console.log('create dislike call')
+        this.$store.commit('setIsLoading', true)
+
+        const dislikeData = {
+            video: parseInt(this.video.id),
+            user_id: parseInt(this.$store.state.user.id)
+        }
+
+        await axios
+        .post(
+            `http://127.0.0.1:8001/api/dislikes/`,
+            dislikeData
+        )
+        .then(response => {
+            console.log('disliked user data', response.data)
+            this.getVideo()
+        })
+        .catch(error => {
+            console.log(error)
+        })
+        this.$store.commit('setIsLoading', false)
+    }
   }, 
   created() {
   }
@@ -190,7 +247,6 @@ export default {
     margin-bottom: 15px;
   }
   .uploader-name {
-    padding-top: 20px;
     padding-bottom: 20px;
     font-weight: 700;
   }
