@@ -11,6 +11,36 @@
                     <h3 v-if="this.$store.state.user.name">Name: {{ this.$store.state.user.name}}</h3>
                     <h3>Email: {{ this.$store.state.user.username}}</h3>
                 </div>
+
+                <div class="box has-background-light" style="margin-top:50px; padding-bottom: 65px;">
+                    <h2 class="subtitle">Uploaded videos</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Views</th>
+                                <th>Like</th>
+                                <th>Dislike</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(obj, index) in user_videos" :key="obj.id">
+                                <td>{{ index + 1}}</td>
+                                <td>
+                                    {{ obj.title }}
+                                </td>
+                                <td>{{ obj.view_count }}</td>
+                                <td>{{ obj.like_count }}</td>
+                                <td>{{ obj.dislike_count }}</td>
+                                <td>
+                                    <router-link :to="{ name: 'Video', params: { id: obj.id }}"> <i class="fa fa-eye"></i></router-link>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="column is-6">
@@ -34,8 +64,12 @@
         },
         data(){
             return {
-                
+                user_videos: [],
+                user_id: parseInt(this.$store.state.user.id)
             }
+        },
+        beforeMount() { 
+            this.getUserVideo()
         },
         methods: {
             async logout() {
@@ -56,11 +90,21 @@
                             console.log(JSON.stringify(error));
                         }
                     )
+            },
+            async getUserVideo() {
+                await axios
+                    .get(`http://127.0.0.1:8001/api/user/${this.user_id}/videos/`,)
+                    .then(response => {
+                        this.user_videos = response.data
+                        console.log('user videos', response.data)
+                    })
+                    .catch(
+                        error => {
+                            console.log(JSON.stringify(error));
+                        }
+                    )
             }
         },
-        mounted() {
-        
-        }
     }
 </script>
 

@@ -73,6 +73,7 @@ import {toast} from 'bulma-toast'
 export default {
   name: 'Video',
   components: {
+
   },
   data () {
     return {
@@ -101,7 +102,7 @@ export default {
             .get(`http://127.0.0.1:8001/api/videos/${videoID}/`)
             .then(response => {
                 this.video = response.data
-                console.log('response data', response.data)        
+                console.log('response video data', response.data)        
             })
             .catch(error => {
                 console.log(error)
@@ -141,7 +142,7 @@ export default {
                         video_liked_user_ids
                     )
                     .then(response => {
-                        console.log('liked user data', response.data)
+                        console.log('response liked user data', response.data)
                         this.liked_users = response.data
                     })
                     .catch(error => {
@@ -186,11 +187,25 @@ export default {
         )
         .then(response => {
             console.log('liked user data', response.data)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+
+        // dislike delete
+        await axios
+        .post(
+            `http://127.0.0.1:8001/api/dislike/delete/`,
+            likeData
+        )
+        .then(response => {
+            console.log('del dislike response', response.data)
             this.getVideo()
         })
         .catch(error => {
             console.log(error)
         })
+
         this.$store.commit('setIsLoading', false)
     },
     // create display
@@ -209,16 +224,31 @@ export default {
             dislikeData
         )
         .then(response => {
-            console.log('disliked user data', response.data)
+            console.log('disliked data', response.data)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+
+        // dislike delete
+        await axios
+        .post(
+            `http://127.0.0.1:8001/api/like/delete/`,
+            dislikeData
+        )
+        .then(response => {
+            console.log('del like response', response.data)
             this.getVideo()
         })
         .catch(error => {
             console.log(error)
         })
+
         this.$store.commit('setIsLoading', false)
     }
   }, 
   created() {
+    
   }
 }
 </script>
