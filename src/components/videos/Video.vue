@@ -109,7 +109,6 @@ export default {
                 console.log(error)
             })
             
-            console.log('created_user', this.created_user)
             await axios
                     .get(
                         `http://127.0.0.1:8000/api/users/${this.created_user}/`, 
@@ -138,9 +137,8 @@ export default {
             
             // video liked
             let video_liked_user_ids = {
-                'user_ids': this.video.likes.map((item) => item.user_id)
+                'user_ids': this.video.likes.map((item) => item.created_user)
             }
-            console.log('video_liked_user_ids', video_liked_user_ids)
             await axios
                     .post(
                         `http://127.0.0.1:8000/api/video/users`,
@@ -156,7 +154,7 @@ export default {
         
             // disliked_users
             let video_disliked_user_ids = {
-                'user_ids': this.video.dislikes.map((item) => item.user_id)
+                'user_ids': this.video.dislikes.map((item) => item.created_user)
             }
             console.log('video_disliked_user_ids', video_disliked_user_ids)
             await axios
@@ -172,7 +170,6 @@ export default {
                         console.log(error)
                     })
 
-        
         this.$store.commit('setIsLoading', false)
     },
     // create like
@@ -184,7 +181,8 @@ export default {
             video: parseInt(this.video.id),
             created_user: parseInt(this.$store.state.user.id)
         }
-
+        
+        // create like
         await axios
         .post(
             `http://127.0.0.1:8000/api/likes/`,
