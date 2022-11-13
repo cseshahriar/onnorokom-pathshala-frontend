@@ -28,6 +28,7 @@
                         <input type="text" class="input" v-model="youtube_video_id" name="youtube_video_id" id="youtube_video_id" placeholder="Youtube Video ID"/>
                     </div>
                 </div>
+    
         
                 <button type="submit" class="button is-success"
                 @click="$emit('createVideo')"
@@ -50,10 +51,14 @@ export default {
             title: '',
             description: '',
             youtube_video_id: '',
+            created_user_id: this.$store.state.user.id,
             errors: []
         }
     },
-        methods: {
+    mounted() {
+        console.log('created_user_id', this.created_user_id)
+    },
+    methods: {
             async submitForm() {
                 this.errors = []
                 
@@ -75,7 +80,7 @@ export default {
                         title: this.title,
                         description: this.description,
                         youtube_video_id: this.youtube_video_id,
-                        author_id: this.$store.state.user.id
+                        created_user: this.created_user_id
                     }
 
                     await axios

@@ -81,6 +81,7 @@ export default {
         author_name: '',
         liked_users: [],
         disliked_users: [],
+        created_user: '',
     }
   },
   mounted() {
@@ -102,15 +103,18 @@ export default {
             .get(`http://127.0.0.1:8000/api/videos/${videoID}/`)
             .then(response => {
                 this.video = response.data
-                console.log('response video data', response.data)        
+                this.created_user = this.video.created_user    
             })
             .catch(error => {
                 console.log(error)
             })
             
-            let author_id = this.video.author_id
+            console.log('created_user', this.created_user)
             await axios
-                    .get(`http://127.0.0.1:8000/api/users/${author_id}/`, axiosConfig)
+                    .get(
+                        `http://127.0.0.1:8000/api/users/${this.created_user}/`, 
+                        axiosConfig
+                    )
                     .then(response => {
                         console.log('response user data', response.data)
                         
@@ -126,9 +130,10 @@ export default {
                         }
                         
                         this.author_name = name
+                        console.log('video user response 133', response.data)
                     })
                     .catch(error => {
-                        console.log(error)
+                        console.log('video user name 136', error)
                     })
             
             // video liked
@@ -177,7 +182,7 @@ export default {
 
         const likeData = {
             video: parseInt(this.video.id),
-            user_id: parseInt(this.$store.state.user.id)
+            created_user: parseInt(this.$store.state.user.id)
         }
 
         await axios
@@ -215,7 +220,7 @@ export default {
 
         const dislikeData = {
             video: parseInt(this.video.id),
-            user_id: parseInt(this.$store.state.user.id)
+            created_user: parseInt(this.$store.state.user.id)
         }
 
         await axios
