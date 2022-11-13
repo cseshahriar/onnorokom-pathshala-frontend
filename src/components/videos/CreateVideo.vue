@@ -79,7 +79,7 @@ export default {
                     }
 
                     await axios
-                    .post('http://127.0.0.1:8001/api/videos/', formData)
+                    .post('http://127.0.0.1:8000/api/videos/', formData)
                     .then(response => {
                         toast({
                             message: 'Video has been created',

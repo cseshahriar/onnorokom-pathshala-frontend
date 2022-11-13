@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     getVideos() {
-        axios.get('http://127.0.0.1:8001/api/videos/')
+        axios.get('http://127.0.0.1:8000/api/videos/')
         .then(response => (this.videos = response.data) )
         .catch(err => console.log(err))
         console.log(this.videos) 

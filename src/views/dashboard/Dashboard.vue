@@ -93,7 +93,7 @@
             },
             async getUserVideo() {
                 await axios
-                    .get(`http://127.0.0.1:8001/api/user/${this.user_id}/videos/`,)
+                    .get(`http://127.0.0.1:8000/api/user/${this.user_id}/videos/`,)
                     .then(response => {
                         this.user_videos = response.data
                         console.log('user videos', response.data)

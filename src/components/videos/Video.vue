@@ -99,7 +99,7 @@ export default {
         };
 
         await axios
-            .get(`http://127.0.0.1:8001/api/videos/${videoID}/`)
+            .get(`http://127.0.0.1:8000/api/videos/${videoID}/`)
             .then(response => {
                 this.video = response.data
                 console.log('response video data', response.data)        
@@ -182,7 +182,7 @@ export default {
 
         await axios
         .post(
-            `http://127.0.0.1:8001/api/likes/`,
+            `http://127.0.0.1:8000/api/likes/`,
             likeData
         )
         .then(response => {
@@ -195,7 +195,7 @@ export default {
         // dislike delete
         await axios
         .post(
-            `http://127.0.0.1:8001/api/dislike/delete/`,
+            `http://127.0.0.1:8000/api/dislike/delete/`,
             likeData
         )
         .then(response => {
@@ -220,7 +220,7 @@ export default {
 
         await axios
         .post(
-            `http://127.0.0.1:8001/api/dislikes/`,
+            `http://127.0.0.1:8000/api/dislikes/`,
             dislikeData
         )
         .then(response => {
@@ -233,7 +233,7 @@ export default {
         // dislike delete
         await axios
         .post(
-            `http://127.0.0.1:8001/api/like/delete/`,
+            `http://127.0.0.1:8000/api/like/delete/`,
             dislikeData
         )
         .then(response => {
