@@ -1,4 +1,4 @@
-# onnorokom-pathshala-frontend
+# shosen-tube-frontend
 application frontend
 
 
