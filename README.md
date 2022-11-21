@@ -1,5 +1,5 @@
 # onnorokom-pathshala-frontend
-Onnorokom pathshala frontend
+application frontend
 
 
 # __Usage:__
